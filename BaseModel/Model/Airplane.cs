@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace BaseModel.Model
 {
-    class Airplane : Base<AirplaneEntity>
+    public class Airplane : Base<AirplaneEntity>
     {
-        // if you need, add special methods.
+        private static Airplane _instance;
+
+        public static Airplane GetInstance()
+        {
+            if (_instance == null)
+                _instance = new Airplane();
+            return _instance;
+        }
+
+        public Airplane() : base(new List<AirplaneEntity>())
+        {
+            // nothing to do
+        }
     }
 }

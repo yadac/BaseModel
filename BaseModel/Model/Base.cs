@@ -1,54 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BaseModel.Model
 {
     /// <summary>
-    /// 
+    /// crud for all of derived data class.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Base<T> where T : class
+    public class Base<T> where T : BaseEntity
     {
-        public List<T> _list;
-        private Object thisLock = new Object();
+        protected List<T> _list;
+        private object _obj = new object();
+
+        public Base(List<T> list)
+        {
+            this._list = list;
+        }
 
         /// <summary>
-        /// 全ての要素を返却する
+        /// 
         /// </summary>
         /// <returns></returns>
         internal virtual List<T> SelectAll()
         {
-            List<T> ret = new List<T>();
-            lock (thisLock)
+            List<T> ret;
+            lock (_obj)
             {
-                ret = _list;
+                ret = new List<T>();
+                foreach (var item in _list)
+                    ret.Add(this.Clone(item));
             }
             return ret;
         }
 
         /// <summary>
-        /// 引数で受け取ったキーと一致する要素を返却（1件だけどList）
+        /// 
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        internal virtual List<T> Select(string selectKey)
+        internal virtual T Select(string key)
         {
-            List<T> temp = new List<T>();
-            var record = _list.FirstOrDefault(c => c.ToString() == selectKey);
-            temp.Add(record);
-            return temp;
+            lock (_obj)
+            { 
+                return _list.FirstOrDefault(c => c.Key == key);
+            }
         }
 
         /// <summary>
-        /// 引数で受け取った要素を追加する
+        /// 
         /// </summary>
-        /// <param name="addList"></param>
+        /// <param name="list"></param>
         internal virtual void Insert(List<T> list)
         {
-
+            lock (_obj) { 
+                _list.AddRange(list);
+            }
         }
 
         /// <summary>
@@ -57,7 +68,7 @@ namespace BaseModel.Model
         /// <param name="list"></param>
         internal virtual void Update(List<T> list)
         {
-
+            // todo : implement something to update procedure
         }
 
         /// <summary>
@@ -66,7 +77,25 @@ namespace BaseModel.Model
         /// <param name="list"></param>
         internal virtual void Delete(List<T> list)
         {
-
+            lock (_obj)
+            {
+                // todo : implement something to delete procedure
+            }
         }
+
+        // todo : add delete insert method at once (during semaphore)
+
+        // refer to : http://smdn.jp/programming/netfx/cloning/
+        private T Clone(T t)
+        {
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                binaryFormatter.Serialize(stream, t);
+                stream.Seek(0, SeekOrigin.Begin);
+                return binaryFormatter.Deserialize(stream) as T;
+            }
+        }
+    }
     }
 }

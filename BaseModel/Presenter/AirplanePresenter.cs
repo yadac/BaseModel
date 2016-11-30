@@ -9,11 +9,11 @@ namespace BaseModel.Presenter
 {
     class AirplanePresenter
     {
-        private Airplane myModel;
+        private Airplane _myModel;
 
         public AirplanePresenter()
         {
-            myModel = new Airplane();
+            _myModel = Airplane.GetInstance();
         }
 
         public void InsertData()
@@ -21,13 +21,13 @@ namespace BaseModel.Presenter
             // 追加用リストの作成
             List<AirplaneEntity> list = new List<AirplaneEntity>()
             {
-                new AirplaneEntity() {Id = "101", Name = "ana101", Key = "101ana101"},
-                new AirplaneEntity() {Id = "102", Name = "ana102", Key = "102ana102"},
-                new AirplaneEntity() {Id = "201", Name = "jal201", Key = "201jal201"},
-                new AirplaneEntity() {Id = "202", Name = "jal202", Key = "202jal202"},
+                new AirplaneEntity("aaa"),
+                new AirplaneEntity("bbb"),
+                new AirplaneEntity("ccc"),
+                new AirplaneEntity("ddd"),
             };
             // 追加
-            myModel.Insert(list);
+            _myModel.Insert(list);
         }
 
         public void DeleteData()
@@ -35,11 +35,11 @@ namespace BaseModel.Presenter
             // 削除用リストの作成
             List<AirplaneEntity> list = new List<AirplaneEntity>()
             {
-                new AirplaneEntity() {Id = "101", Name = "ana101", Key = "101ana101"},
-                new AirplaneEntity() {Id = "102", Name = "ana102", Key = "102ana102"},
+                new AirplaneEntity("bbb"),
+                new AirplaneEntity("ddd"),
             };
             // 削除
-            myModel.Delete(list);
+            _myModel.Delete(list);
 
         }
     }

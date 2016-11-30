@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace BaseModel.Model
 {
-    class AirplaneEntity
+    [Serializable]
+    public class AirplaneEntity : BaseEntity
     {
+        public AirplaneEntity(string key) : base(key)
+        {
+            // nothing to do 
+        }
+
         public string Id { get; set; }
         public string Name { get; set; }
-        //public List<PassengerInfo> Detail { get; set; }
-        public string Key { get; set; }
-
-        public override string ToString()
-        {
-            return Key;
-        }
+        public List<PassengerInfo> PassengerInfoList { get; set; }
     }
 
-    class PassengerInfo
+    public class PassengerInfo
     {
         public string Name { get; set; }
         public int Age { get; set; }
