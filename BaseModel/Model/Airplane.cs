@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaseModel.Model
 {
-    public class Airplane : Base<AirplaneEntity>
+    public class Airplane : BaseAirplane<BaseAirplaneEntity>
     {
         private static Airplane _instance;
 

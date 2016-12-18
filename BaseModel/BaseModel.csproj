@@ -55,6 +55,9 @@
     <Compile Include="Model\Airplane.cs" />
     <Compile Include="Model\AirplaneEntity.cs" />
     <Compile Include="Model\Base.cs" />
+    <Compile Include="Model\BaseAirplane.cs" />
+    <Compile Include="Model\BaseAirplaneEntity.cs" />
+    <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Presenter\AirplanePresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

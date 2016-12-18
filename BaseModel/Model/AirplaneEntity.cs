@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 namespace BaseModel.Model
 {
     [Serializable]
-    public class AirplaneEntity : BaseEntity
+    public class AirplaneEntity : BaseAirplaneEntity
     {
-        public AirplaneEntity(string key) : base(key)
-        {
-            // nothing to do 
-        }
 
         public string Id { get; set; }
         public string Name { get; set; }

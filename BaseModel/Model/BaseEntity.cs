@@ -8,9 +8,5 @@ namespace BaseModel.Model
     {
         public string Key { get; private set; }
 
-        protected BaseEntity(string key)
-        {
-            this.Key = key;
-        }
     }
 }
